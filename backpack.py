@@ -16,7 +16,7 @@ objetos = [
     {"nombre": "Colores", "peso": 1.1, "valor": 22}
 ]
 
-CAPACIDAD_MAXIMA = 8
+CAPACIDAD_MAXIMA = 6
 TAMANO_POBLACION = 30
 TASA_MUTACION = 0.05
 GENERACIONES_LIMITE = 1000
@@ -69,7 +69,7 @@ def obtener_valor_maximo_posible():
     return max_valor
 
 def mostrar_contenido_mochila(individuo):
-    print("\n🎒 Mochila óptima contiene:")
+    print("\n Mochila óptima contiene:")
     peso_total = 0.0
     valor_total = 0
     for i in range(len(individuo)):
@@ -78,8 +78,8 @@ def mostrar_contenido_mochila(individuo):
             print(f" - {obj['nombre']} (Peso: {obj['peso']}kg, Valor: {obj['valor']})")
             peso_total += obj["peso"]
             valor_total += obj["valor"]
-    print(f"\n📦 Peso total: {peso_total:.2f}kg / {CAPACIDAD_MAXIMA}kg")
-    print(f"💰 Valor total: {valor_total}")
+    print(f"\n Peso total: {peso_total:.2f}kg / {CAPACIDAD_MAXIMA}kg")
+    print(f" Valor total: {valor_total}")
 
 def algoritmo_genetico():
     poblacion = generar_poblacion()
@@ -94,15 +94,15 @@ def algoritmo_genetico():
         mejor = max(poblacion, key=calcular_fitness)
         mejor_valor = calcular_fitness(mejor)
 
-        print(f"\n📈 Generación {generaciones}")
-        print(f"🧠 Mejor individuo: {mejor} | Valor educativo: {mejor_valor}")
+        print(f"\n Generación {generaciones}")
+        print(f" Mejor individuo: {mejor} | Valor educativo: {mejor_valor}")
 
         if mejor_valor > mejor_valor_global:
             mejor_valor_global = mejor_valor
             mejor_solucion_global = mejor
 
         if mejor_valor_global == valor_optimo:
-            print("\n✅ ¡Solución óptima encontrada!")
+            print("\n ¡Solución óptima encontrada!")
             mostrar_contenido_mochila(mejor_solucion_global)
             break
 
@@ -116,7 +116,7 @@ def algoritmo_genetico():
 
         poblacion = nueva_poblacion
     else:
-        print("\n⏹ Se alcanzó el límite de generaciones sin encontrar la solución óptima.")
+        print("\n Se alcanzó el límite de generaciones sin encontrar la solución óptima.")
         mostrar_contenido_mochila(mejor_solucion_global)
 
 if __name__ == "__main__":
