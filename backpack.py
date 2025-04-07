@@ -1,9 +1,6 @@
 import random
 from itertools import product
 
-# --------------------------------------------
-# 🧾 Lista de objetos escolares con peso decimal
-# --------------------------------------------
 objetos = [
     {"nombre": "Cuaderno", "peso": 1.2, "valor": 15},
     {"nombre": "Lápiz", "peso": 0.1, "valor": 5},
@@ -19,23 +16,17 @@ objetos = [
     {"nombre": "Colores", "peso": 1.1, "valor": 22}
 ]
 
-CAPACIDAD_MAXIMA = 8  # kg
+CAPACIDAD_MAXIMA = 8
 TAMANO_POBLACION = 30
 TASA_MUTACION = 0.05
 GENERACIONES_LIMITE = 1000
 
-# --------------------------------------------
-# 1️⃣ POBLACIÓN INICIAL
-# --------------------------------------------
 def generar_individuo():
     return [random.randint(0, 1) for _ in range(len(objetos))]
 
 def generar_poblacion():
     return [generar_individuo() for _ in range(TAMANO_POBLACION)]
 
-# --------------------------------------------
-# 2️⃣ FUNCIÓN FITNESS
-# --------------------------------------------
 def calcular_fitness(individuo):
     peso_total = 0.0
     valor_total = 0
@@ -47,9 +38,6 @@ def calcular_fitness(individuo):
         return 0
     return valor_total
 
-# --------------------------------------------
-# 3️⃣ SELECCIÓN
-# --------------------------------------------
 def seleccion_ruleta(poblacion, fitnesses):
     total_fitness = sum(fitnesses)
     if total_fitness == 0:
@@ -61,25 +49,16 @@ def seleccion_ruleta(poblacion, fitnesses):
         if current > pick:
             return individuo
 
-# --------------------------------------------
-# 4️⃣ CROSSOVER
-# --------------------------------------------
 def crossover(padre1, padre2):
     punto = random.randint(1, len(padre1) - 1)
     return padre1[:punto] + padre2[punto:]
 
-# --------------------------------------------
-# 5️⃣ MUTACIÓN
-# --------------------------------------------
 def mutar(individuo):
     for i in range(len(individuo)):
         if random.random() < TASA_MUTACION:
             individuo[i] = 1 - individuo[i]
     return individuo
 
-# --------------------------------------------
-# 6️⃣ VALOR ÓPTIMO POSIBLE (Brute-force)
-# --------------------------------------------
 def obtener_valor_maximo_posible():
     max_valor = 0
     for combinacion in product([0, 1], repeat=len(objetos)):
@@ -89,9 +68,6 @@ def obtener_valor_maximo_posible():
             max_valor = max(max_valor, valor)
     return max_valor
 
-# --------------------------------------------
-# 7️⃣ Mostrar contenido de la mochila
-# --------------------------------------------
 def mostrar_contenido_mochila(individuo):
     print("\n🎒 Mochila óptima contiene:")
     peso_total = 0.0
@@ -105,14 +81,10 @@ def mostrar_contenido_mochila(individuo):
     print(f"\n📦 Peso total: {peso_total:.2f}kg / {CAPACIDAD_MAXIMA}kg")
     print(f"💰 Valor total: {valor_total}")
 
-# --------------------------------------------
-# ▶ Ejecutar algoritmo
-# --------------------------------------------
 def algoritmo_genetico():
     poblacion = generar_poblacion()
     mejor_valor_global = 0
     mejor_solucion_global = None
-
     valor_optimo = obtener_valor_maximo_posible()
     generaciones = 0
 
@@ -147,6 +119,5 @@ def algoritmo_genetico():
         print("\n⏹ Se alcanzó el límite de generaciones sin encontrar la solución óptima.")
         mostrar_contenido_mochila(mejor_solucion_global)
 
-# 🧪 Ejecutar
 if __name__ == "__main__":
     algoritmo_genetico()
