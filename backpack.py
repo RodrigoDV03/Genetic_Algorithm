@@ -9,9 +9,12 @@ objetos = [
     {"nombre": "Plumones", "peso": 2, "valor": 25},
     {"nombre": "Regla", "peso": 1, "valor": 12},
     {"nombre": "Escuadra", "peso": 3, "valor": 30},
+    {"nombre": "Calculadora", "peso": 2, "valor": 40},
+    {"nombre": "Compás", "peso": 1, "valor": 18},
+    {"nombre": "Libro", "peso": 4, "valor": 50}
 ]
 
-CAPACIDAD_MAXIMA = 4  # kg
+CAPACIDAD_MAXIMA = 8  # kg
 TAMANO_POBLACION = 10
 GENERACIONES = 30
 TASA_MUTACION = 0.1
@@ -72,25 +75,33 @@ def mutar(individuo):
 # --------------------------------------------
 # 🧠 ALGORITMO GENÉTICO
 # --------------------------------------------
+# --------------------------------------------
+# ▶ Ejecutar algoritmo con parada por éxito
+# --------------------------------------------
 def algoritmo_genetico():
     poblacion = generar_poblacion()
     mejor_valor_global = 0
     mejor_solucion_global = None
 
-    for generacion in range(GENERACIONES):
+    valor_optimo = obtener_valor_maximo_posible()
+    generaciones = 0
+    GENERACIONES_LIMITE = 1000
+
+    while generaciones < GENERACIONES_LIMITE:
+        generaciones += 1
         fitnesses = [calcular_fitness(ind) for ind in poblacion]
 
         mejor = max(poblacion, key=calcular_fitness)
         mejor_valor = calcular_fitness(mejor)
 
-        print(f"\n📈 Generación {generacion + 1}")
+        print(f"\n📈 Generación {generaciones}")
         print(f"🧠 Mejor individuo: {mejor} | Valor educativo: {mejor_valor}")
 
         if mejor_valor > mejor_valor_global:
             mejor_valor_global = mejor_valor
             mejor_solucion_global = mejor
 
-        if mejor_valor_global == obtener_valor_maximo_posible():
+        if mejor_valor_global == valor_optimo:
             print("\n✅ ¡Solución óptima encontrada!")
             mostrar_contenido_mochila(mejor_solucion_global)
             break
@@ -105,7 +116,7 @@ def algoritmo_genetico():
 
         poblacion = nueva_poblacion
     else:
-        print("\n⏹ Búsqueda finalizada tras máximo de generaciones.")
+        print("\n⏹ Se alcanzó el límite de generaciones sin encontrar la solución óptima.")
         mostrar_contenido_mochila(mejor_solucion_global)
 
 # --------------------------------------------
